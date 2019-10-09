@@ -1,0 +1,1 @@
+board = [_ ] * len(word)
