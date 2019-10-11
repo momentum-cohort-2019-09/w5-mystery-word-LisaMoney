@@ -11,34 +11,41 @@ def make_list_from_text(words):
     
 def get_word(word_list):
     random_word = random.choice(word_list)
-    word_length = (("_ ") * len(random_word))
-    print(word_length)
-    return random_word
+    displayed_letters = ["_"] * len(random_word)
+    print(" ".join(displayed_letters))
+    print(random_word)
+    return random_word, displayed_letters
     
-def guessed_letter():
+def guessed_letter(random_word, displayed_letters, correct_guesses, incorrect_guesses):
+    guess = input("\nPlease enter one letter that you think is in the word, and then press Enter.\n")
+    if guess in random_word:
+        for index, letter in list(enumerate(random_word)):
+            if letter == guess:
+                displayed_letters[index] = letter
+            
+        print(f"{' '.join(displayed_letters)} Awesome!  Guess again!")
+    else: 
+        incorrect_guesses.append(guess)
+        print("Sorry, try again.")
+        print(incorrect_guesses)
+
+def playing_game(word, displayed_letters):
+    gameon = True
     correct_guesses = []
     incorrect_guesses = []
-    request = input("\nPlease enter one letter that you think is in the word, and then press Enter.\n")
-    if request in word(get_word):
-        correct_guesses.append(request)
-        print("Awesome!  Guess again!")
-    else: 
-        incorrect_guesses.append(request)
-        print("Sorry, try again.")
-
-def playing_game(word):
-    gameon = True
     while gameon and len(incorrect_guesses)<8:
-        check_correct_guesses(word, correct_guesses, incorrect_guesses)
-    print(correct_guesses)
+        guessed_letter(word, displayed_letters, correct_guesses, incorrect_guesses)
+        if "_" not in displayed_letters:
+            gameon = False
+            print("You won, sucka!!")
     return correct_guesses
 
-print("\nWelcome to the Mystery Word game. This is a game where you will guess the letters to spell a word. Let's start!\n")
+print("\nWelcome to the Mystery Word game! This is a game where you will guess the letters to spell a word. Let's start!\n")
 
-get_word(read_file("words.txt"))
-guessed_letter()
-playing_game()
+word, displayed_letters = get_word(read_file("words.txt"))
+playing_game(word, displayed_letters)
 
 # return input where you ask it 
 # var = function(input)
 #     and then the response to the input is that var
+# put read_file and get_word together maybe? 
