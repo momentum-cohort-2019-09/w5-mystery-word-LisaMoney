@@ -12,31 +12,31 @@ def make_list_from_text(words):
 def get_word(word_list):
     random_word = random.choice(word_list)
     displayed_letters = ["_"] * len(random_word)
+    # lower_word = lower.random_word()
     print(" ".join(displayed_letters))
     print(random_word)
     return random_word, displayed_letters
     
 def guessed_letter(random_word, displayed_letters, correct_guesses, incorrect_guesses):
-    guess = input("\nPlease enter one letter that you think is in the word, and then press Enter.\n")
+    guess = input("\nType a letter that you think is in the word, and then press Enter.\n")
     if guess in random_word:
         for index, letter in list(enumerate(random_word)):
             if letter == guess:
                 displayed_letters[index] = letter
-            
-        print(f"{' '.join(displayed_letters)} Awesome!  Guess again!")
+        print(f"{' '.join(displayed_letters)} \nGood job!")
     else: 
         incorrect_guesses.append(guess)
-        print("Sorry, try again.")
+        print("Sorry, guess again.")
         print(incorrect_guesses)
 
 def playing_game(word, displayed_letters):
-    gameon = True
+    game_on = True
     correct_guesses = []
     incorrect_guesses = []
-    while gameon and len(incorrect_guesses)<8:
+    while game_on and len(incorrect_guesses)<8:
         guessed_letter(word, displayed_letters, correct_guesses, incorrect_guesses)
         if "_" not in displayed_letters:
-            gameon = False
+            game_on = False
             print("You won, sucka!!")
     return correct_guesses
 
@@ -44,8 +44,3 @@ print("\nWelcome to the Mystery Word game! This is a game where you will guess t
 
 word, displayed_letters = get_word(read_file("words.txt"))
 playing_game(word, displayed_letters)
-
-# return input where you ask it 
-# var = function(input)
-#     and then the response to the input is that var
-# put read_file and get_word together maybe? 
